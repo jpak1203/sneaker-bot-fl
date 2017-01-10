@@ -1,27 +1,28 @@
 module.exports = {
-  url: 'http://www.footlocker.com/product/model:221030/sku:26628009/nike-flyknit-racer-mens/all-black/black/',
-  size: '9',
+  url: '', // footlocker url of shoe
+  size: '', // your shoe size, i.e, 10 | 10.5
   firstName: '',
   lastName: '',
   phoneNumber: '',
   email: '',
-  shipping: {
+  shipping: { 
     addressLine1: '',
     addressLine2: '',
     city: '',
-    state: '',
+    state: '', // state code, i.e., CA or NY
     zipCode: ''
   },
   billing: {
     addressLine1: '',
     addressLine2: '',
     city: '',
-    state: '',
+    state: '', // state code, i.e., CA or NY
     zipCode: ''
   },
   payment: {
     number: '',
-    expiration: '',
-    csc: ''
+    month: '', // month in two digit, i.e., 01 - January | 02 - Feb | 03 - March ... 
+    year: '', // last two digits, i.e., 23 - 2023 | 24 - 2024
+    csc: '' // security code on your card
   }
-}; 
+};

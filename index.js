@@ -9,8 +9,7 @@ describe('onload', function () {
     } else {
       size = size + ".0";
     }
-    //browser.deleteCookie();
-    //browser.refresh(); 
+
     browser.click('#pdp_size_select_mask');
     browser.waitForVisible('a[value="'+size+'"]');
     browser.click('a[value="'+size+'"]');
@@ -21,11 +20,15 @@ describe('onload', function () {
     browser.waitForVisible('a[data-btnname="cart_checkout"]');
     browser.click('a[data-btnname="cart_checkout"]');
     checkout();
-    // payment(); For Credit Card Info Input
+    payment();
+    browser.waitForExist('#inventoryCheck_panel', '' , true);
+    // UNCOMMENT TO BUY!
+    // browser.click('#orderSubmit');
   });
 });
 
 function checkout() {
+  console.log('checkout start');
   browser.waitForExist('#billFirstName');
   browser.setValue('#billFirstName', info.firstName);
   browser.setValue('#billLastName', info.lastName);
@@ -41,11 +44,34 @@ function checkout() {
   while (email.getValue() !== info.email) {
     browser.setValue('#billEmailAddress', info.email);
   }
-  browser.waitForEnabled('a[data-btnname="checkout_billingContinue"]');
-  browser.click('a[data-btnname="checkout_billingContinue"]');
+  browser.click('#billPaneShipToBillingAddress');
+  browser.waitForExist('#shipFirstName');
+  browser.setValue('#shipFirstName', info.firstName);
+  browser.setValue('#shipLastName', info.lastName);
+  browser.setValue('#shipAddress1', info.shipping.addressLine1);
+  browser.setValue('#shipAddress2', info.shipping.addressLine2);
+  browser.setValue('#shipPostalCode', info.shipping.zipCode); 
+  browser.waitForEnabled('#shipHomePhone');
+  var phone = $('#shipHomePhone');
+  while (phone.getValue().replace(/ /g, '') !== info.phoneNumber) { 
+    browser.setValue('#shipHomePhone', info.phoneNumber);
+  }
+  browser.waitForExist('#inventoryCheck_panel', '' , true);
+  browser.waitForEnabled('a[data-btnname="checkout_shippingContinue"]');
+  browser.click('a[data-btnname="checkout_shippingContinue"]');
   browser.waitForExist('#address_verification_use_original_button');
   browser.click('#address_verification_use_original_button'); 
   browser.waitForExist('#inventoryCheck_panel', '' , true);
   browser.click('a[data-btnname="checkout_shippingMethodContinue"]');
+}
+
+function payment() {
+  console.log('payment start');
+  browser.waitForExist('#inventoryCheck_panel', '' , true);
+  browser.setValue('#CardNumber', info.payment.number);
+  browser.setValue('#CardExpireDateMM', info.payment.month);
+  browser.setValue('#CardExpireDateYY', info.payment.year);
+  browser.setValue('#CardCCV', info.payment.csc);
+  browser.click('#payMethodPaneContinue');
   browser.pause(3000);
 }

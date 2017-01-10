@@ -10,9 +10,9 @@
   "license": "ISC",
   "dependencies": {
     "gulp": "^3.9.1",
+    "gulp-webdriver": "^2.0.3",
+    "wdio-jasmine-framework": "^0.2.19",
+    "wdio-selenium-standalone-service": "0.0.7",
     "webdriverio": "^4.5.2"
-  },
-  "devDependencies": {
-    "gulp-webdriver": "^2.0.3"
   }
 }
